@@ -1,5 +1,9 @@
 module Debugger.Internal.Statement
-  ( Statement(..)
+  ( Line
+  , Location(..)
+  , Expr
+  , Id(..)
+  , Statement(..)
   ) where
 
 import Data.Text (Text)

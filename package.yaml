@@ -7,8 +7,7 @@ maintainer:          "luc.tielen@gmail.com"
 copyright:           "Luc Tielen, 2021"
 
 extra-source-files:
-- README.md
-- ChangeLog.md
+  - README.md
 
 # Metadata used when publishing your package
 # synopsis:            Short description of your package
@@ -20,20 +19,26 @@ extra-source-files:
 description:         Please see the README on GitHub at <https://github.com/luc-tielen/debugger-hs#readme>
 
 dependencies:
-- base >= 4.7 && < 5
+  - base >= 4.7 && < 5
+
+default-extensions:
+  - DerivingVia
+  - LambdaCase
+  - OverloadedStrings
 
 library:
   source-dirs: src
   dependencies:
     - text == 1.*
+    - mtl == 2.*
 
 tests:
   debugger-hs-test:
     main:                Spec.hs
     source-dirs:         test
     ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
     dependencies:
-    - debugger-hs
+      - debugger-hs
