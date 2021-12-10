@@ -31,6 +31,7 @@ library:
   dependencies:
     - text == 1.*
     - mtl == 2.*
+    - dlist == 1.*
 
 tests:
   debugger-hs-test:

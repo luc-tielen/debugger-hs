@@ -10,8 +10,9 @@ module Debugger.Builder
   ) where
 
 import Prelude hiding (break, print)
-import qualified Data.Text as T
 import Control.Monad.State.Strict
+import qualified Data.Text as T
+import qualified Data.DList as DList
 import Debugger.Internal.Statement
 
 
@@ -19,7 +20,7 @@ type Counter = Int
 
 data BuilderState
   = BuilderState
-  { stmts :: [Statement]
+  { stmts :: DList.DList Statement
   , varCounter :: Counter
   }
 
@@ -34,8 +35,8 @@ runBuilder = runBuilder' 0
 
 runBuilder' :: Counter -> Builder a -> [Statement]
 runBuilder' counter (Builder m) =
-  let result = execState m (BuilderState [] counter)
-   in reverse $ stmts result
+  let result = execState m (BuilderState DList.empty counter)
+   in DList.apply (stmts result) []
 
 break :: Location -> Builder Id
 break loc = do
@@ -60,7 +61,7 @@ print = emit . Print
 
 emit :: Statement -> Builder ()
 emit stmt =
-  modify $ \s -> s { stmts = stmt : stmts s }
+  modify $ \s -> s { stmts = DList.cons stmt (stmts s) }
 
 newBreakpointVar :: Builder Var
 newBreakpointVar = do
