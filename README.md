@@ -45,10 +45,12 @@ $ gdb $PROGRAM -ex "source ./script.gdb"
 
 ## TODO
 
-- [ ] Create core AST datatype
-- [ ] Create builder monad for easily constructing GDB scripts using Haskell do-syntax.
-- [ ] Write function for compiling AST -> GDB script
+- [x] Create core AST datatype
+- [x] Create builder monad for easily constructing GDB scripts using Haskell do-syntax.
+- [x] Write function for compiling AST -> GDB script
 - [ ] Create CLI application (stack/nix?) that takes the DSL and outputs GDB to stdout.
 - [ ] Add helper functions for easily adding breakpoints (using tools like grep)
+- [ ] Extend core AST datatype to support more functionality
 - [ ] Add LLDB support also?
+- [ ] DSL (to support GDB and LLDB at same time)?
 

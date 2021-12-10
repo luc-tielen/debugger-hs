@@ -1,6 +1,7 @@
 module Debugger.Internal.Statement
   ( Line
   , Location(..)
+  , Var
   , Expr
   , Id(..)
   , Statement(..)
@@ -8,6 +9,7 @@ module Debugger.Internal.Statement
 
 import Data.Text (Text)
 
+type Var = Text  -- TODO different type?
 
 type Expr = Text  -- TODO different type?
 
@@ -29,6 +31,7 @@ data Statement
   | Command Id [Statement]
   | Continue
   | Print Expr
+  | Set Var Expr
   deriving Show
 
   {-

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 3b3dec4f7e98e26b8e06a915e911d24f47cfdf271411ddca31302714937faece
+-- hash: e278a8ba0eb0b61d8eebd270535c3f3887adb048b91d64746480d218f9225444
 
 name:           debugger-hs
 version:        0.1.0.0
@@ -19,7 +19,6 @@ license-file:   LICENSE
 build-type:     Simple
 extra-source-files:
     README.md
-    ChangeLog.md
 
 source-repository head
   type: git
@@ -27,14 +26,18 @@ source-repository head
 
 library
   exposed-modules:
+      Debugger.Builder
       Debugger.Internal.Statement
+      Debugger.Render
       Lib
   other-modules:
       Paths_debugger_hs
   hs-source-dirs:
       src
+  default-extensions: DerivingVia LambdaCase OverloadedStrings
   build-depends:
       base >=4.7 && <5
+    , mtl ==2.*
     , text ==1.*
   default-language: Haskell2010
 
@@ -45,6 +48,7 @@ test-suite debugger-hs-test
       Paths_debugger_hs
   hs-source-dirs:
       test
+  default-extensions: DerivingVia LambdaCase OverloadedStrings
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
