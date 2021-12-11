@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 93a7950b13e0837f792db05a80115dd7a50dc713d3be5b26c2ec038f9866aaae
+-- hash: 51bd4d36568b2f359d5bf0a4953cc9d138ef3e03a8ad87804a070d999c37ada9
 
 name:           debugger-hs
 version:        0.1.0.0
@@ -39,6 +39,7 @@ library
       LambdaCase
       OverloadedStrings
       FlexibleContexts
+  ghc-options: -Wall
   build-depends:
       base >=4.7 && <5
     , dlist ==1.*
@@ -60,7 +61,7 @@ test-suite debugger-hs-test
       LambdaCase
       OverloadedStrings
       FlexibleContexts
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
     , debugger-hs

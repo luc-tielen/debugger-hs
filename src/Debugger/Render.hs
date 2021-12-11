@@ -36,6 +36,10 @@ render stmt = runReader (go stmt) 0
           ]
       Continue ->
         pure "continue"
+      Run ->
+        pure "run"
+      Reset ->
+        pure "monitor reset"
       Set var expr ->
         pure $ T.unwords ["set", var, "=", expr]
       Print val ->

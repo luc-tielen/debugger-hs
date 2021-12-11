@@ -40,7 +40,7 @@ spec = describe "script builder" $ parallel $ do
 
   it "returns correct breakpoint variable for use in commands" $ do
     let script = do
-          break (Function "func1")
+          _ <- break (Function "func1")
           bp2 <- break (Function "func2")
           command bp2 $ do
             print "42"
@@ -76,6 +76,14 @@ spec = describe "script builder" $ parallel $ do
   it "can emit continue statements" $ do
     let script = continue
     runBuilder script `shouldBe` [Continue]
+
+  it "can emit run statements" $ do
+    let script = run
+    runBuilder script `shouldBe` [Run]
+
+  it "can emit reset statements" $ do
+    let script = reset
+    runBuilder script `shouldBe` [Reset]
 
   it "can emit print statements" $ do
     let script = print "1"

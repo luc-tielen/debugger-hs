@@ -21,6 +21,9 @@ description: Please see the README on GitHub at <https://github.com/luc-tielen/d
 dependencies:
   - base >= 4.7 && < 5
 
+ghc-options:
+  - -Wall
+
 default-extensions:
   - DerivingVia
   - LambdaCase

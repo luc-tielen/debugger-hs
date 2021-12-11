@@ -5,6 +5,8 @@ module Debugger.Builder
   , break
   , command
   , continue
+  , run
+  , reset
   , print
   ) where
 
@@ -47,11 +49,17 @@ break loc = do
 command :: Id -> Builder () -> Builder ()
 command bp cmds = do
   counter <- gets varCounter
-  let stmts = runBuilder' counter cmds
-  emit $ Command bp stmts
+  let statements = runBuilder' counter cmds
+  emit $ Command bp statements
 
 continue :: Builder ()
 continue = emit Continue
+
+run :: Builder ()
+run = emit Run
+
+reset :: Builder ()
+reset = emit Reset
 
 print :: Expr -> Builder ()
 print = emit . Print

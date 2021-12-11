@@ -6,7 +6,6 @@ module Test.Debugger.RenderSpec
 
 import Prelude hiding (break, print)
 import qualified Data.Text as T
-import Data.Foldable
 import Test.Hspec
 import NeatInterpolation
 import Debugger.Builder
@@ -75,6 +74,16 @@ spec = describe "rendering scripts" $ parallel $ do
   it "renders continue statements" $ do
     continue `shouldRenderAs` [text|
       continue
+      |]
+
+  it "renders run statements" $ do
+    run `shouldRenderAs` [text|
+      run
+      |]
+
+  it "renders reset statements" $ do
+    reset `shouldRenderAs` [text|
+      monitor reset
       |]
 
   it "renders print statements" $ do

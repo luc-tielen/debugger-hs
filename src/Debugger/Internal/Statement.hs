@@ -31,6 +31,8 @@ data Statement
   = Break Location
   | Command Id [Statement]
   | Continue
+  | Run
+  | Reset
   | Print Expr
   | Set Var Expr
   deriving (Eq, Show)
@@ -47,10 +49,8 @@ data Statement
   | Enable Id
   | Disable Id
   | Delete
-  | Reset
-  | Run
   | Step
   | Next
   | If Expr [Statement]
-  -- TODO info b, set logging on (opts), ...
+  -- TODO target, source, info b, set logging on (opts), ...
 -}
