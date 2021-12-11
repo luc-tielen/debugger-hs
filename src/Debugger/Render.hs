@@ -36,6 +36,10 @@ render stmt = runReader (go stmt) 0
           ]
       Continue ->
         pure "continue"
+      Next count ->
+        pure $ "next" <> renderCount count
+      Step count ->
+        pure $ "step" <> renderCount count
       Run ->
         pure "run"
       Reset ->
@@ -70,6 +74,11 @@ renderSelection = \case
   Single bp -> renderId bp
   Many bps -> T.intercalate " " $ map renderId bps
   All -> ""
+
+renderCount :: Maybe Int -> T.Text
+renderCount = \case
+  Nothing -> ""
+  Just x -> " " <> T.pack (show x)
 
 interleaveNewlines :: [T.Text] -> T.Text
 interleaveNewlines txts = T.intercalate "\n" txts

@@ -76,9 +76,24 @@ spec = describe "rendering scripts" $ parallel $ do
       continue
       |]
 
-  it "renders run statements" $ do
-    run `shouldRenderAs` [text|
-      run
+  it "renders next statements" $ do
+    let script1 = next
+        script2 = nextN 10
+    script1 `shouldRenderAs` [text|
+      next
+      |]
+    script2 `shouldRenderAs` [text|
+      next 10
+      |]
+
+  it "renders step statements" $ do
+    let script1 = step
+        script2 = stepN 10
+    script1 `shouldRenderAs` [text|
+      step
+      |]
+    script2 `shouldRenderAs` [text|
+      step 10
       |]
 
   it "renders reset statements" $ do

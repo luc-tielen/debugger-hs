@@ -5,6 +5,10 @@ module Debugger.Builder
   , break
   , command
   , continue
+  , step
+  , stepN
+  , next
+  , nextN
   , run
   , reset
   , print
@@ -83,6 +87,18 @@ delete, disable, enable :: ToSelection a => a -> Builder ()
 delete = emit . Delete . toSelection
 disable = emit . Disable . toSelection
 enable = emit . Enable . toSelection
+
+next :: Builder ()
+next = emit $ Next Nothing
+
+nextN :: Int -> Builder ()
+nextN = emit . Next . Just
+
+step :: Builder ()
+step = emit $ Step Nothing
+
+stepN :: Int -> Builder ()
+stepN = emit . Step . Just
 
 -- TODO: add set statement
 

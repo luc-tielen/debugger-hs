@@ -29,9 +29,6 @@ data Selection
   | All
   deriving (Eq, Show)
 
-all :: Selection
-all = All
-
 -- A place to set a breakpoint at.
 data Location
   = Function Text
@@ -43,6 +40,8 @@ data Statement
   = Break Location
   | Command Id [Statement]
   | Continue
+  | Step (Maybe Int)
+  | Next (Maybe Int)
   | Run
   | Reset
   | Delete Selection
@@ -61,8 +60,6 @@ data Statement
   | Call Expr
   | Printf Text [Expr]
   | Shell ShellCommand
-  | Step
-  | Next
   | If Expr [Statement]
   -- TODO target, source, info b, set logging on (opts), ...
 -}

@@ -77,6 +77,18 @@ spec = describe "script builder" $ parallel $ do
     let script = continue
     runBuilder script `shouldBe` [Continue]
 
+  it "can emit next statements" $ do
+    let script1 = next
+        script2 = nextN 10
+    runBuilder script1 `shouldBe` [Next Nothing]
+    runBuilder script2 `shouldBe` [Next (Just 10)]
+
+  it "can emit step statements" $ do
+    let script1 = step
+        script2 = stepN 10
+    runBuilder script1 `shouldBe` [Step Nothing]
+    runBuilder script2 `shouldBe` [Step (Just 10)]
+
   it "can emit run statements" $ do
     let script = run
     runBuilder script `shouldBe` [Run]
