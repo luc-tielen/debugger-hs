@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 7660b583dd9cb290cc15a9879ef0325b0629122f88ff2be7614075e53a13b335
+-- hash: 9a489c96a8259b532143120b9fa0f4ff165c2dfcebfd144edad47efcf9222f70
 
 name:           debugger-hs
 version:        0.1.0.0
@@ -68,6 +68,7 @@ test-suite debugger-hs-test
       base >=4.7 && <5
     , debugger-hs
     , hspec >=2.6.1 && <3.0.0
+    , mtl ==2.*
     , neat-interpolation ==0.*
     , text ==1.*
   default-language: Haskell2010

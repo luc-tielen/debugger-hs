@@ -11,6 +11,7 @@ import NeatInterpolation
 import Debugger.Builder
 import Debugger.Render
 import Debugger.Internal.Statement
+import Control.Monad.Cont
 
 
 -- NOTE: 2 $s is to escape the quasiquoter, renders as 1 $
@@ -195,4 +196,26 @@ spec = describe "rendering scripts" $ parallel $ do
     let script = target (Remote 9001)
     script `shouldRenderAs` [text|
       target remote tcp:localhost:9001
+      |]
+
+  it "mixes well with other Haskell concepts" $ do
+    let example = flip runContT delete $ do
+          bp1 <- ContT $ withBreakpoint (Function "func1")
+          bp2 <- ContT $ withBreakpoint (Function "func2")
+          pure [bp1, bp2]
+        withBreakpoint :: Location -> (Id -> Builder ()) -> Builder ()
+        withBreakpoint loc f = do
+          bp <- break loc
+          command bp $ f bp
+
+    example `shouldRenderAs` [text|
+      break func1
+      set $$var0 = $$bpnum
+      command $$var0
+        break func2
+        set $$var1 = $$bpnum
+        command $$var1
+          delete $$var0 $$var1
+        end
+      end
       |]
