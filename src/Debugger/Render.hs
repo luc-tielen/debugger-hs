@@ -46,6 +46,8 @@ render stmt = runReader (go stmt) 0
         pure "monitor reset"
       Set var expr ->
         pure $ T.unwords ["set", var, "=", expr]
+      Call expr ->
+        pure $ T.unwords ["call", expr]
       Print val ->
         pure $ "print " <> "\"" <> val <> "\""
       Delete sel ->
@@ -56,6 +58,7 @@ render stmt = runReader (go stmt) 0
         pure $ T.strip $ "enable " <> renderSelection sel
       Target target ->
         pure $ "target " <> renderTargetConfig target
+
     indent txt = do
       spaces <- ask
       let indentation = T.replicate spaces " "

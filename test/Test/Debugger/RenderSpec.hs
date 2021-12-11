@@ -101,6 +101,16 @@ spec = describe "rendering scripts" $ parallel $ do
       monitor reset
       |]
 
+  it "renders set statements" $ do
+    set "$var" "123" `shouldRenderAs` [text|
+      set $$var = 123
+      |]
+
+  it "renders call statements" $ do
+    call "function(123)" `shouldRenderAs` [text|
+      call function(123)
+      |]
+
   it "renders delete statements" $ do
     let script1 = do
           bp <- break (Function "main")

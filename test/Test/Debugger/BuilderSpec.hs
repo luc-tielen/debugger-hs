@@ -97,6 +97,14 @@ spec = describe "script builder" $ parallel $ do
     let script = reset
     runBuilder script `shouldBe` [Reset]
 
+  it "can emit set statements" $ do
+    let script = set "$var" "123"
+    runBuilder script `shouldBe` [Set "$var" "123"]
+
+  it "can emit call statements" $ do
+    let script = call "my_function(123, 456)"
+    runBuilder script `shouldBe` [Call "my_function(123, 456)"]
+
   it "can emit delete statements" $ do
     let script1 = do
           bp <- break (Function "main")

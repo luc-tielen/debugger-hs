@@ -12,6 +12,8 @@ module Debugger.Builder
   , run
   , reset
   , print
+  , set
+  , call
   , delete
   , disable
   , enable
@@ -51,7 +53,7 @@ break :: Location -> Builder Id
 break loc = do
   emit $ Break loc
   var <- newBreakpointVar
-  emit $ Set var "$bpnum"
+  set var "$bpnum"
   pure $ Id var
 
 command :: Id -> Builder () -> Builder ()
@@ -71,6 +73,12 @@ reset = emit Reset
 
 print :: Expr -> Builder ()
 print = emit . Print
+
+set :: Var -> Expr -> Builder ()
+set var value = emit $ Set var value
+
+call :: Expr -> Builder ()
+call = emit . Call
 
 class ToSelection a where
   toSelection :: a -> Selection
@@ -103,8 +111,6 @@ stepN = emit . Step . Just
 
 target :: TargetConfig -> Builder ()
 target = emit . Target
-
--- TODO: add set statement
 
 emit :: Statement -> Builder ()
 emit stmt =

@@ -58,6 +58,7 @@ data Statement
   | Disable Selection
   | Print Expr
   | Set Var Expr
+  | Call Expr
   | Target TargetConfig
   deriving (Eq, Show)
 
@@ -67,7 +68,6 @@ type ShellCommand = Text
 
 data Statement
   = Break Location -- hbreak? conditional breakpoints?
-  | Call Expr
   | Printf Text [Expr]
   | Shell ShellCommand
   | If Expr [Statement]
