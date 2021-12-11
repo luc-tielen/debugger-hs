@@ -44,6 +44,12 @@ render stmt = runReader (go stmt) 0
         pure $ T.unwords ["set", var, "=", expr]
       Print val ->
         pure $ "print " <> "\"" <> val <> "\""
+      Delete sel ->
+        pure $ T.strip $ "delete " <> renderSelection sel
+      Disable sel ->
+        pure $ T.strip $ "disable " <> renderSelection sel
+      Enable sel ->
+        pure $ T.strip $ "enable " <> renderSelection sel
 
     indent txt = do
       spaces <- ask
@@ -58,6 +64,12 @@ renderLoc :: Location -> T.Text
 renderLoc = \case
   Function func -> func
   File path line -> T.pack path <> ":" <> T.pack (show line)
+
+renderSelection :: Selection -> T.Text
+renderSelection = \case
+  Single bp -> renderId bp
+  Many bps -> T.intercalate " " $ map renderId bps
+  All -> ""
 
 interleaveNewlines :: [T.Text] -> T.Text
 interleaveNewlines txts = T.intercalate "\n" txts

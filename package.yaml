@@ -29,6 +29,7 @@ default-extensions:
   - LambdaCase
   - OverloadedStrings
   - FlexibleContexts
+  - FlexibleInstances
 
 library:
   source-dirs: src

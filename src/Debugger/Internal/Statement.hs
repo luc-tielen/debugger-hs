@@ -4,11 +4,13 @@ module Debugger.Internal.Statement
   , Var
   , Expr
   , Id(..)
+  , Selection(..)
   , Statement(..)
   , Script
   ) where
 
 import Data.Text (Text)
+
 
 type Var = Text  -- TODO different type?
 
@@ -19,6 +21,16 @@ newtype Id = Id Text
   deriving (Eq, Show)
 
 type Line = Int
+
+-- Selection of 1 or more (breakpoints)
+data Selection
+  = Single Id
+  | Many [Id]
+  | All
+  deriving (Eq, Show)
+
+all :: Selection
+all = All
 
 -- A place to set a breakpoint at.
 data Location
@@ -33,6 +45,9 @@ data Statement
   | Continue
   | Run
   | Reset
+  | Delete Selection
+  | Enable Selection
+  | Disable Selection
   | Print Expr
   | Set Var Expr
   deriving (Eq, Show)
@@ -46,9 +61,6 @@ data Statement
   | Call Expr
   | Printf Text [Expr]
   | Shell ShellCommand
-  | Enable Id
-  | Disable Id
-  | Delete
   | Step
   | Next
   | If Expr [Statement]

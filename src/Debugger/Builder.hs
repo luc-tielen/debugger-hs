@@ -8,6 +8,9 @@ module Debugger.Builder
   , run
   , reset
   , print
+  , delete
+  , disable
+  , enable
   ) where
 
 import Prelude hiding (break, print)
@@ -63,6 +66,23 @@ reset = emit Reset
 
 print :: Expr -> Builder ()
 print = emit . Print
+
+class ToSelection a where
+  toSelection :: a -> Selection
+
+instance ToSelection Id where
+  toSelection = Single
+
+instance ToSelection [Id] where
+  toSelection = Many
+
+instance ToSelection Selection where
+  toSelection = id
+
+delete, disable, enable :: ToSelection a => a -> Builder ()
+delete = emit . Delete . toSelection
+disable = emit . Disable . toSelection
+enable = emit . Enable . toSelection
 
 -- TODO: add set statement
 

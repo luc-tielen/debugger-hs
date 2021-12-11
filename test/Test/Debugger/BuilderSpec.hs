@@ -85,6 +85,75 @@ spec = describe "script builder" $ parallel $ do
     let script = reset
     runBuilder script `shouldBe` [Reset]
 
+  it "can emit delete statements" $ do
+    let script1 = do
+          bp <- break (Function "main")
+          delete bp
+        script2 = do
+          bp1 <- break (Function "f")
+          bp2 <- break (Function "g")
+          delete [bp1, bp2]
+        script3 = delete All
+    runBuilder script1 `shouldBe`
+      [ Break (Function "main")
+      , Set "$var0" "$bpnum"
+      , Delete $ Single (Id "$var0")
+      ]
+    runBuilder script2 `shouldBe`
+      [ Break (Function "f")
+      , Set "$var0" "$bpnum"
+      , Break (Function "g")
+      , Set "$var1" "$bpnum"
+      , Delete $ Many [Id "$var0", Id "$var1"]
+      ]
+    runBuilder script3 `shouldBe` [Delete All]
+
+  it "can emit disable statements" $ do
+    let script1 = do
+          bp <- break (Function "main")
+          disable bp
+        script2 = do
+          bp1 <- break (Function "f")
+          bp2 <- break (Function "g")
+          disable [bp1, bp2]
+        script3 = disable All
+    runBuilder script1 `shouldBe`
+      [ Break (Function "main")
+      , Set "$var0" "$bpnum"
+      , Disable $ Single (Id "$var0")
+      ]
+    runBuilder script2 `shouldBe`
+      [ Break (Function "f")
+      , Set "$var0" "$bpnum"
+      , Break (Function "g")
+      , Set "$var1" "$bpnum"
+      , Disable $ Many [Id "$var0", Id "$var1"]
+      ]
+    runBuilder script3 `shouldBe` [Disable All]
+
+  it "can emit disable statements" $ do
+    let script1 = do
+          bp <- break (Function "main")
+          enable bp
+        script2 = do
+          bp1 <- break (Function "f")
+          bp2 <- break (Function "g")
+          enable [bp1, bp2]
+        script3 = enable All
+    runBuilder script1 `shouldBe`
+      [ Break (Function "main")
+      , Set "$var0" "$bpnum"
+      , Enable $ Single (Id "$var0")
+      ]
+    runBuilder script2 `shouldBe`
+      [ Break (Function "f")
+      , Set "$var0" "$bpnum"
+      , Break (Function "g")
+      , Set "$var1" "$bpnum"
+      , Enable $ Many [Id "$var0", Id "$var1"]
+      ]
+    runBuilder script3 `shouldBe` [Enable All]
+
   it "can emit print statements" $ do
     let script = print "1"
     runBuilder script `shouldBe` [Print "1"]

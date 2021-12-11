@@ -86,6 +86,81 @@ spec = describe "rendering scripts" $ parallel $ do
       monitor reset
       |]
 
+  it "renders delete statements" $ do
+    let script1 = do
+          bp <- break (Function "main")
+          delete bp
+        script2 = do
+          bp1 <- break (Function "f")
+          bp2 <- break (Function "g")
+          delete [bp1, bp2]
+        script3 = delete All
+    script1 `shouldRenderAs` [text|
+      break main
+      set $$var0 = $$bpnum
+      delete $$var0
+      |]
+    script2 `shouldRenderAs` [text|
+      break f
+      set $$var0 = $$bpnum
+      break g
+      set $$var1 = $$bpnum
+      delete $$var0 $$var1
+      |]
+    script3 `shouldRenderAs` [text|
+      delete
+      |]
+
+  it "renders disable statements" $ do
+    let script1 = do
+          bp <- break (Function "main")
+          disable bp
+        script2 = do
+          bp1 <- break (Function "f")
+          bp2 <- break (Function "g")
+          disable [bp1, bp2]
+        script3 = disable All
+    script1 `shouldRenderAs` [text|
+      break main
+      set $$var0 = $$bpnum
+      disable $$var0
+      |]
+    script2 `shouldRenderAs` [text|
+      break f
+      set $$var0 = $$bpnum
+      break g
+      set $$var1 = $$bpnum
+      disable $$var0 $$var1
+      |]
+    script3 `shouldRenderAs` [text|
+      disable
+      |]
+
+  it "renders enable statements" $ do
+    let script1 = do
+          bp <- break (Function "main")
+          enable bp
+        script2 = do
+          bp1 <- break (Function "f")
+          bp2 <- break (Function "g")
+          enable [bp1, bp2]
+        script3 = enable All
+    script1 `shouldRenderAs` [text|
+      break main
+      set $$var0 = $$bpnum
+      enable $$var0
+      |]
+    script2 `shouldRenderAs` [text|
+      break f
+      set $$var0 = $$bpnum
+      break g
+      set $$var1 = $$bpnum
+      enable $$var0 $$var1
+      |]
+    script3 `shouldRenderAs` [text|
+      enable
+      |]
+
   it "renders print statements" $ do
     print "42" `shouldRenderAs` [text|
       print "42"
