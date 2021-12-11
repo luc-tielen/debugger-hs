@@ -5,6 +5,7 @@ module Debugger.Internal.Statement
   , Expr
   , Id(..)
   , Statement(..)
+  , Script
   ) where
 
 import Data.Text (Text)
@@ -23,7 +24,7 @@ type Line = Int
 data Location
   = Function Text
   | File FilePath Line
-  deriving Show
+  deriving (Eq, Show)
 
 -- Main AST data type.
 data Statement
@@ -32,21 +33,16 @@ data Statement
   | Continue
   | Print Expr
   | Set Var Expr
-  deriving Show
+  deriving (Eq, Show)
 
+type Script = [Statement]
   {-
-type Var = Text
-
 type ShellCommand = Text
 
 data Statement
   = Break Location -- hbreak? conditional breakpoints?
-  | Command Id [Statement]
-  | Set Var Expr
   | Call Expr
-  | Print Expr
   | Printf Text [Expr]
-  | Continue
   | Shell ShellCommand
   | Enable Id
   | Disable Id

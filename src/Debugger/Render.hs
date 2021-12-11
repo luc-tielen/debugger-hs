@@ -1,6 +1,6 @@
 module Debugger.Render
   ( renderIO
-  , render
+  , renderScript
   ) where
 
 import qualified Data.Text as T
@@ -8,21 +8,21 @@ import qualified Data.Text.IO as TIO
 import Debugger.Internal.Statement
 
 
-renderIO :: [Statement] -> FilePath -> IO ()
-renderIO stmt path =
-  let txt = render stmt
+renderIO :: Script -> FilePath -> IO ()
+renderIO script path =
+  let txt = renderScript script
    in TIO.writeFile path txt
 
-render :: [Statement] -> T.Text
-render stmts = T.unlines $ map render1 stmts
+renderScript :: Script -> T.Text
+renderScript script = T.unlines $ map render script
 
-render1 :: Statement -> T.Text
-render1 = \case
+render :: Statement -> T.Text
+render = \case
   Break loc -> "break " <> renderLoc loc
   Command bp stmts ->
     T.unlines [ "command " <> renderId bp
               -- TODO: handle nested indents?
-              , T.unlines $ map (indent . render1) stmts
+              , T.unlines $ map (indent . render) stmts
               , "end"
               ]
   Continue -> "continue"
@@ -46,4 +46,3 @@ renderLoc = \case
   Function func -> func
   File path line -> T.pack path <> ":" <> T.pack (show line)
 
--- $> render [Break (Function "main"),Set "$var0" "$bpnum",Command (Id "$var0") [Print "123"],Continue]

@@ -6,7 +6,6 @@ module Debugger.Builder
   , command
   , continue
   , print
-  , example
   ) where
 
 import Prelude hiding (break, print)
@@ -61,7 +60,7 @@ print = emit . Print
 
 emit :: Statement -> Builder ()
 emit stmt =
-  modify $ \s -> s { stmts = DList.cons stmt (stmts s) }
+  modify $ \s -> s { stmts = DList.snoc (stmts s) stmt }
 
 newBreakpointVar :: Builder Var
 newBreakpointVar = do
@@ -69,12 +68,3 @@ newBreakpointVar = do
   modify $ \s -> s { varCounter = varCounter s + 1 }
   pure $ "$var" <> T.pack (show currentId)
 
-example :: Builder ()
-example = do
-  bp <- break (Function "main")
-  command bp $ do
-    print "123"
-
-  continue
-
--- $> runBuilder example
