@@ -5,6 +5,8 @@ module Debugger.Internal.Statement
   , Expr
   , Id(..)
   , Selection(..)
+  , Port
+  , TargetConfig(..)
   , Statement(..)
   , Script
   ) where
@@ -29,6 +31,13 @@ data Selection
   | All
   deriving (Eq, Show)
 
+type Port = Int
+
+-- TODO: add other variants
+data TargetConfig
+  = Remote Port  -- assumes tcp as protocol, and localhost as host for now
+  deriving (Eq, Show)
+
 -- A place to set a breakpoint at.
 data Location
   = Function Text
@@ -49,6 +58,7 @@ data Statement
   | Disable Selection
   | Print Expr
   | Set Var Expr
+  | Target TargetConfig
   deriving (Eq, Show)
 
 type Script = [Statement]
@@ -61,5 +71,5 @@ data Statement
   | Printf Text [Expr]
   | Shell ShellCommand
   | If Expr [Statement]
-  -- TODO target, source, info b, set logging on (opts), ...
+  -- TODO source, info b, set logging on (opts), ...
 -}

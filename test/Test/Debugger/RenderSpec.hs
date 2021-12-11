@@ -180,3 +180,9 @@ spec = describe "rendering scripts" $ parallel $ do
     print "42" `shouldRenderAs` [text|
       print "42"
       |]
+
+  it "renders target statements" $ do
+    let script = target (Remote 9001)
+    script `shouldRenderAs` [text|
+      target remote tcp:localhost:9001
+      |]

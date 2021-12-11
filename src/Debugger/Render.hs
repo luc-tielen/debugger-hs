@@ -54,7 +54,8 @@ render stmt = runReader (go stmt) 0
         pure $ T.strip $ "disable " <> renderSelection sel
       Enable sel ->
         pure $ T.strip $ "enable " <> renderSelection sel
-
+      Target target ->
+        pure $ "target " <> renderTargetConfig target
     indent txt = do
       spaces <- ask
       let indentation = T.replicate spaces " "
@@ -74,6 +75,10 @@ renderSelection = \case
   Single bp -> renderId bp
   Many bps -> T.intercalate " " $ map renderId bps
   All -> ""
+
+renderTargetConfig :: TargetConfig -> T.Text
+renderTargetConfig = \case
+  Remote port -> "remote tcp:localhost:" <> T.pack (show port)
 
 renderCount :: Maybe Int -> T.Text
 renderCount = \case

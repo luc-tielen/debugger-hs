@@ -15,6 +15,7 @@ module Debugger.Builder
   , delete
   , disable
   , enable
+  , target
   ) where
 
 import Prelude hiding (break, print)
@@ -99,6 +100,9 @@ step = emit $ Step Nothing
 
 stepN :: Int -> Builder ()
 stepN = emit . Step . Just
+
+target :: TargetConfig -> Builder ()
+target = emit . Target
 
 -- TODO: add set statement
 
