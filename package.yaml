@@ -5,6 +5,8 @@ license: BSD3
 author: "Luc Tielen"
 maintainer: "luc.tielen@gmail.com"
 copyright: "Luc Tielen, 2021"
+category: debugging
+synopsis: Write your GDB scripts in Haskell.
 
 extra-source-files:
   - README.md

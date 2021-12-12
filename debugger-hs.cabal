@@ -4,11 +4,13 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: ea256c3fdbfefa2d33c1044d99a71243944e11cd285dbe2236f58f0fa778ec13
+-- hash: ab9171f6a3d676dafad59e27a5c0982d34707fbc6d4ed681346b09e602b2946c
 
 name:           debugger-hs
 version:        0.1.0.0
+synopsis:       Write your GDB scripts in Haskell.
 description:    Please see the README on GitHub at <https://github.com/luc-tielen/debugger-hs#readme>
+category:       debugging
 homepage:       https://github.com/luc-tielen/debugger-hs#readme
 bug-reports:    https://github.com/luc-tielen/debugger-hs/issues
 author:         Luc Tielen
