@@ -58,6 +58,8 @@ render stmt = runReader (go stmt) 0
         pure $ T.strip $ "enable " <> renderSelection sel
       Shell cmd ->
         pure $ "shell " <> cmd
+      Source file ->
+        pure $ "source " <> T.pack file
       Target target ->
         pure $ "target " <> renderTargetConfig target
 

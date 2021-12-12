@@ -197,6 +197,11 @@ spec = describe "rendering scripts" $ parallel $ do
       shell sleep 1
       |]
 
+  it "renders source statements" $ do
+    source "./other_script.gdb" `shouldRenderAs` [text|
+      source ./other_script.gdb
+      |]
+
   it "renders target statements" $ do
     let script = target (Remote 9001)
     script `shouldRenderAs` [text|

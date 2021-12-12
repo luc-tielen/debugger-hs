@@ -17,6 +17,7 @@ module Debugger.Builder
   , delete
   , disable
   , enable
+  , source
   , shell
   , target
   ) where
@@ -112,6 +113,9 @@ stepN = emit . Step . Just
 
 shell :: ShellCommand -> Builder ()
 shell = emit . Shell
+
+source :: FilePath -> Builder ()
+source = emit . Source
 
 target :: TargetConfig -> Builder ()
 target = emit . Target

@@ -178,6 +178,10 @@ spec = describe "script builder" $ parallel $ do
     let script = print "1"
     runBuilder script `shouldBe` [Print "1"]
 
+  it "can emit source statements" $ do
+    let script = source "./other_script.gdb"
+    runBuilder script `shouldBe` [Source "./other_script.gdb"]
+
   it "can emit shell statements" $ do
     let script = shell "sleep 1"
     runBuilder script `shouldBe` [Shell "sleep 1"]

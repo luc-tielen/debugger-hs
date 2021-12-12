@@ -60,6 +60,7 @@ data Statement
   | Enable Selection
   | Disable Selection
   | Shell ShellCommand
+  | Source FilePath
   | Print Expr
   | Set Var Expr
   | Call Expr
@@ -68,10 +69,9 @@ data Statement
 
 type Script = [Statement]
   {-
-
 data Statement
   = Break Location -- hbreak? conditional breakpoints?
   | Printf Text [Expr]
   | If Expr [Statement]
-  -- TODO source, info b, set logging on (opts), ...
+  -- TODO info b, set logging on (opts), ...
 -}
