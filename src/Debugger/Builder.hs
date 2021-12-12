@@ -28,7 +28,7 @@ import Prelude hiding (break, print)
 import Control.Monad.State.Strict
 import qualified Data.Text as T
 import qualified Data.DList as DList
-import Debugger.Internal.Statement
+import Debugger.Statement
 
 
 type Counter = Int

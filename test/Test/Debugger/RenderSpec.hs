@@ -10,7 +10,7 @@ import Test.Hspec
 import NeatInterpolation
 import Debugger.Builder
 import Debugger.Render
-import Debugger.Internal.Statement
+import Debugger.Statement
 import Control.Monad.Cont
 
 

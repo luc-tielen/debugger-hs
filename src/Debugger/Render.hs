@@ -6,7 +6,7 @@ module Debugger.Render
 import Control.Monad.Reader
 import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
-import Debugger.Internal.Statement
+import Debugger.Statement
 
 
 -- | Renders a GDB script and writes it to the given file path.

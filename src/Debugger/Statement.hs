@@ -1,4 +1,4 @@
-module Debugger.Internal.Statement
+module Debugger.Statement
   ( Line
   , Location(..)
   , Var

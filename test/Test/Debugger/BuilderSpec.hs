@@ -6,7 +6,7 @@ import Prelude hiding (break, print)
 import Data.Foldable
 import Test.Hspec
 import Debugger.Builder
-import Debugger.Internal.Statement
+import Debugger.Statement
 
 
 spec :: Spec

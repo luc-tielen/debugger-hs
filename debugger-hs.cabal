@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 9a489c96a8259b532143120b9fa0f4ff165c2dfcebfd144edad47efcf9222f70
+-- hash: ea256c3fdbfefa2d33c1044d99a71243944e11cd285dbe2236f58f0fa778ec13
 
 name:           debugger-hs
 version:        0.1.0.0
@@ -27,8 +27,8 @@ source-repository head
 library
   exposed-modules:
       Debugger.Builder
-      Debugger.Internal.Statement
       Debugger.Render
+      Debugger.Statement
       Lib
   other-modules:
       Paths_debugger_hs
