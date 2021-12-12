@@ -20,6 +20,7 @@ module Debugger.Builder
   , source
   , shell
   , target
+  , info
   ) where
 
 import Prelude hiding (break, print)
@@ -119,6 +120,9 @@ source = emit . Source
 
 target :: TargetConfig -> Builder ()
 target = emit . Target
+
+info :: InfoOptions -> Builder ()
+info = emit . Info
 
 emit :: Statement -> Builder ()
 emit stmt =

@@ -8,6 +8,7 @@ module Debugger.Internal.Statement
   , Selection(..)
   , Port
   , TargetConfig(..)
+  , InfoOptions(..)
   , Statement(..)
   , Script
   ) where
@@ -41,6 +42,10 @@ data TargetConfig
   = Remote Port  -- assumes tcp as protocol, and localhost as host for now
   deriving (Eq, Show)
 
+data InfoOptions
+  = Breakpoints
+  deriving (Eq, Show)
+
 -- A place to set a breakpoint at.
 data Location
   = Function Text
@@ -65,6 +70,7 @@ data Statement
   | Set Var Expr
   | Call Expr
   | Target TargetConfig
+  | Info InfoOptions
   deriving (Eq, Show)
 
 type Script = [Statement]

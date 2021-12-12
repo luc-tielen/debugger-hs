@@ -62,6 +62,8 @@ render stmt = runReader (go stmt) 0
         pure $ "source " <> T.pack file
       Target target ->
         pure $ "target " <> renderTargetConfig target
+      Info opts ->
+        pure $ "info " <> renderInfoOpts opts
 
     indent txt = do
       spaces <- ask
@@ -86,6 +88,10 @@ renderSelection = \case
 renderTargetConfig :: TargetConfig -> T.Text
 renderTargetConfig = \case
   Remote port -> "remote tcp:localhost:" <> T.pack (show port)
+
+renderInfoOpts :: InfoOptions -> T.Text
+renderInfoOpts = \case
+  Breakpoints -> "breakpoints"
 
 renderCount :: Maybe Int -> T.Text
 renderCount = \case

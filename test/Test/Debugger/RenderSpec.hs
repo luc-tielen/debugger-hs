@@ -208,6 +208,12 @@ spec = describe "rendering scripts" $ parallel $ do
       target remote tcp:localhost:9001
       |]
 
+  it "renders target statements" $ do
+    let script = info Breakpoints
+    script `shouldRenderAs` [text|
+      info breakpoints
+      |]
+
   it "mixes well with other Haskell concepts" $ do
     let script = flip runContT delete $ do
           bp1 <- ContT $ withBreakpoint (Function "func1")

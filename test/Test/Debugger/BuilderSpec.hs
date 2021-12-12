@@ -190,3 +190,6 @@ spec = describe "script builder" $ parallel $ do
     let script = target (Remote 9001)
     runBuilder script `shouldBe` [Target (Remote 9001)]
 
+  it "can emit info statements" $ do
+    let script = info Breakpoints
+    runBuilder script `shouldBe` [Info Breakpoints]
