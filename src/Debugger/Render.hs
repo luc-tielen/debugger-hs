@@ -1,5 +1,6 @@
 module Debugger.Render
-  ( renderIO
+  ( renderToStdOut
+  , renderIO
   , renderScript
   ) where
 
@@ -8,6 +9,12 @@ import qualified Data.Text as T
 import qualified Data.Text.IO as TIO
 import Debugger.Statement
 
+
+-- | Renders a GDB script and writes it to stdout.
+renderToStdOut :: Script -> IO ()
+renderToStdOut script =
+  let txt = renderScript script
+   in TIO.putStrLn txt
 
 -- | Renders a GDB script and writes it to the given file path.
 renderIO :: Script -> FilePath -> IO ()
