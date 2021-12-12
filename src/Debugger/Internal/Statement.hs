@@ -15,20 +15,19 @@ module Debugger.Internal.Statement
 
 import Data.Text (Text)
 
-
 type Var = Text  -- TODO different type?
 
 type Expr = Text  -- TODO different type?
 
 type ShellCommand = Text
 
--- A unique ID for a breakpoint.
+-- | Datatype representing a ID of a breakpoint.
 newtype Id = Id Text
   deriving (Eq, Show)
 
 type Line = Int
 
--- Selection of 1 or more (breakpoints)
+-- | Helper datatype for a selection of 1 or more (breakpoints)
 data Selection
   = Single Id
   | Many [Id]
@@ -38,21 +37,23 @@ data Selection
 type Port = Int
 
 -- TODO: add other variants
+-- | Datatype for configuring the GDB target.
 data TargetConfig
   = Remote Port  -- assumes tcp as protocol, and localhost as host for now
   deriving (Eq, Show)
 
+-- | Enumeration of all things info can be requested about.
 data InfoOptions
   = Breakpoints
   deriving (Eq, Show)
 
--- A place to set a breakpoint at.
+-- | A place to set a breakpoint at.
 data Location
   = Function Text
   | File FilePath Line
   deriving (Eq, Show)
 
--- Main AST data type.
+-- | Main AST data type used to build a script with.
 data Statement
   = Break Location
   | Command Id [Statement]
@@ -73,11 +74,14 @@ data Statement
   | Info InfoOptions
   deriving (Eq, Show)
 
+-- | A script is a collection of statements.
 type Script = [Statement]
+
   {-
+TODO
 data Statement
   = Break Location -- hbreak? conditional breakpoints?
   | Printf Text [Expr]
   | If Expr [Statement]
-  -- TODO info b, set logging on (opts), ...
+  -- set logging on (opts), ...
 -}

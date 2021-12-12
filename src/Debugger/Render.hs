@@ -9,11 +9,13 @@ import qualified Data.Text.IO as TIO
 import Debugger.Internal.Statement
 
 
+-- | Renders a GDB script and writes it to the given file path.
 renderIO :: Script -> FilePath -> IO ()
 renderIO script path =
   let txt = renderScript script
    in TIO.writeFile path txt
 
+-- | Renders a GDB script
 renderScript :: Script -> T.Text
 renderScript script =
   interleaveNewlines $ map render script
