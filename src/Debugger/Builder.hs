@@ -17,6 +17,7 @@ module Debugger.Builder
   , delete
   , disable
   , enable
+  , shell
   , target
   ) where
 
@@ -108,6 +109,9 @@ step = emit $ Step Nothing
 
 stepN :: Int -> Builder ()
 stepN = emit . Step . Just
+
+shell :: ShellCommand -> Builder ()
+shell = emit . Shell
 
 target :: TargetConfig -> Builder ()
 target = emit . Target

@@ -192,6 +192,11 @@ spec = describe "rendering scripts" $ parallel $ do
       print "42"
       |]
 
+  it "renders shell statements" $ do
+    shell "sleep 1" `shouldRenderAs` [text|
+      shell sleep 1
+      |]
+
   it "renders target statements" $ do
     let script = target (Remote 9001)
     script `shouldRenderAs` [text|
@@ -199,7 +204,7 @@ spec = describe "rendering scripts" $ parallel $ do
       |]
 
   it "mixes well with other Haskell concepts" $ do
-    let example = flip runContT delete $ do
+    let script = flip runContT delete $ do
           bp1 <- ContT $ withBreakpoint (Function "func1")
           bp2 <- ContT $ withBreakpoint (Function "func2")
           pure [bp1, bp2]
@@ -208,7 +213,7 @@ spec = describe "rendering scripts" $ parallel $ do
           bp <- break loc
           command bp $ f bp
 
-    example `shouldRenderAs` [text|
+    script `shouldRenderAs` [text|
       break func1
       set $$var0 = $$bpnum
       command $$var0

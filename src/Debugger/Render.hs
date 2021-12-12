@@ -56,6 +56,8 @@ render stmt = runReader (go stmt) 0
         pure $ T.strip $ "disable " <> renderSelection sel
       Enable sel ->
         pure $ T.strip $ "enable " <> renderSelection sel
+      Shell cmd ->
+        pure $ "shell " <> cmd
       Target target ->
         pure $ "target " <> renderTargetConfig target
 

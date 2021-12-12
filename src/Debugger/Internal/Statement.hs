@@ -3,6 +3,7 @@ module Debugger.Internal.Statement
   , Location(..)
   , Var
   , Expr
+  , ShellCommand
   , Id(..)
   , Selection(..)
   , Port
@@ -17,6 +18,8 @@ import Data.Text (Text)
 type Var = Text  -- TODO different type?
 
 type Expr = Text  -- TODO different type?
+
+type ShellCommand = Text
 
 -- A unique ID for a breakpoint.
 newtype Id = Id Text
@@ -56,6 +59,7 @@ data Statement
   | Delete Selection
   | Enable Selection
   | Disable Selection
+  | Shell ShellCommand
   | Print Expr
   | Set Var Expr
   | Call Expr
@@ -64,12 +68,10 @@ data Statement
 
 type Script = [Statement]
   {-
-type ShellCommand = Text
 
 data Statement
   = Break Location -- hbreak? conditional breakpoints?
   | Printf Text [Expr]
-  | Shell ShellCommand
   | If Expr [Statement]
   -- TODO source, info b, set logging on (opts), ...
 -}

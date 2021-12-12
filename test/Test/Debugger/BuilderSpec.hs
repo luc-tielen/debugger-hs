@@ -178,6 +178,10 @@ spec = describe "script builder" $ parallel $ do
     let script = print "1"
     runBuilder script `shouldBe` [Print "1"]
 
+  it "can emit shell statements" $ do
+    let script = shell "sleep 1"
+    runBuilder script `shouldBe` [Shell "sleep 1"]
+
   it "can emit target statements" $ do
     let script = target (Remote 9001)
     runBuilder script `shouldBe` [Target (Remote 9001)]
