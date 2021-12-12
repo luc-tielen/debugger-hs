@@ -11,4 +11,7 @@ clean:
 	stack clean
 	rm -rf .stack-work
 
-.PHONY: build test test-watch clean
+release:
+	stack sdist
+
+.PHONY: build test test-watch clean release
