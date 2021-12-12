@@ -32,6 +32,12 @@ passed in to GDB like you would normally.
 Here's an example of how you can use this library to generate a GDB script:
 
 ```haskell
+#!/usr/bin/env cabal
+{- cabal:
+build-depends: base, debugger-hs
+-}
+
+{-# LANGUAGE OverloadedStrings #-}
 module Main where
 
 import qualified Debugger.Builder as D
@@ -46,14 +52,15 @@ script = do
     D.print "42"
     D.continue
 
--- And then we can render the GDB script to a file:
+-- And then we can render the GDB script to stdout:
 main :: IO ()
 main = do
   let gdbScript = D.runBuilder script
-  D.renderIO gdbScript "./script.gdb"
+  D.renderToStdOut gdbScript
 ```
 
-This will render the following GDB scripts:
+If you save this file as "GDB.hs" and run it using `cabal run GDB.hs`,
+this will render the following GDB script:
 
 ```gdb
 break main
@@ -64,11 +71,13 @@ command $var0
 end
 ```
 
+Now you can use the generated script with GDB as follows:
+
 ```bash
 # Replace $PROGRAM with the program you want to debug.
-$ gdb $PROGRAM <<< $(< /path/to/stack-script)
+$ gdb $PROGRAM <<< $(< cabal run GDB.hs)
 # or if your shell doesn't support the previous command:
-$ /path/to/stack-script > ./script.gdb
+$ cabal run GDB.hs > ./script.gdb
 $ gdb $PROGRAM -ex "source ./script.gdb"
 ```
 
@@ -77,7 +86,6 @@ $ gdb $PROGRAM -ex "source ./script.gdb"
 - [x] Create core AST datatype
 - [x] Create builder monad for easily constructing GDB scripts using Haskell do-syntax.
 - [x] Write function for compiling AST -> GDB script
-- [ ] Create CLI application (stack/nix?) that takes the DSL and outputs GDB to stdout.
 - [ ] Add helper functions for easily adding breakpoints (using tools like grep)
 - [ ] Extend core AST datatype to support more functionality
 - [ ] Add LLDB support also?
