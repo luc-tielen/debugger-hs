@@ -56,11 +56,11 @@ script = do
 main :: IO ()
 main = do
   let gdbScript = D.runBuilder script
-  D.renderToStdOut gdbScript
+  D.renderIO gdbScript "./script.gdb"
 ```
 
 If you save this file as "GDB.hs" and run it using `cabal run GDB.hs`,
-this will render the following GDB script:
+this will render the following GDB script and write it to "./script.gdb":
 
 ```gdb
 break main
@@ -75,9 +75,6 @@ Now you can use the generated script with GDB as follows:
 
 ```bash
 # Replace $PROGRAM with the program you want to debug.
-$ gdb $PROGRAM <<< $(< cabal run GDB.hs)
-# or if your shell doesn't support the previous command:
-$ cabal run GDB.hs > ./script.gdb
 $ gdb $PROGRAM -ex "source ./script.gdb"
 ```
 

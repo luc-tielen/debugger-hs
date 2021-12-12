@@ -1,2 +1,4 @@
 .stack-work/
 *~
+dist-docs*
+upload-docs.sh
