@@ -1,0 +1,7 @@
+cradle:
+  cabal:
+    - path: "src"
+      component: "lib:debugger-hs"
+
+    - path: "test"
+      component: "debugger-hs:test:debugger-hs-test"
